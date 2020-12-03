@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const input = fs.readFileSync("input.txt", "utf-8");
+const input = fs.readFileSync("day01/input.txt", "utf-8");
 const sum = 2020;
 const diffs = [];
 const lines = input.split("\n");
