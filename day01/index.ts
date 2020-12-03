@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 const input = fs.readFileSync("input.txt", "utf-8");
-
+const sum = 2020;
 const diffs = [];
 const lines = input.split("\n");
 let myNumber;
@@ -13,7 +13,7 @@ for (let i = 0; i < lines.length; i++) {
         myNumber = number;
         break;
     }
-    diffs.push(2020 - number);
+    diffs.push(sum - number);
 };
 
-console.log(`${myNumber} * ${2020 - myNumber} = ${myNumber * (2020 - myNumber)}`);
+console.log(`Part 1 solution: ${myNumber} * ${sum - myNumber} = ${myNumber * (sum - myNumber)}`);
