@@ -45,4 +45,23 @@ const part1 = () => {
     console.log(`Part 1, encountered ${treesEncountered} trees.`);
 }
 
+const part2 = () => {
+    let encounters: number[] = [];
+
+    encounters.push(slide(1, 1));
+    encounters.push(slide(3, 1));
+    encounters.push(slide(5, 1));
+    encounters.push(slide(7, 1));
+    encounters.push(slide(1, 2));
+
+    let product = 1;
+
+    encounters.forEach(element => {
+        product *= element;
+    });
+
+    console.log(`Part 1, product of encounters: ${product}`);
+}
+
 part1();
+part2();
