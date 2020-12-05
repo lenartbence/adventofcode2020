@@ -56,7 +56,7 @@ const validateIssueYear = (input: string) => validateYear(input, 2010, 2020);
 const validateExpirationYear = (input: string) => validateYear(input, 2020, 2030);
 
 const validateHeight = (input: string): boolean => {
-    const data = input.match(/([0-9]*)(in|cm)/);
+    const data = input.match(/^([0-9]*)(in|cm)$/);
     if (!data) {
         return false;
     }
@@ -66,7 +66,7 @@ const validateHeight = (input: string): boolean => {
 }
 
 const validateHexColor = (input: string): boolean => {
-    return input.match(/#[0-9A-Fa-f]{6}/) != null;
+    return input.match(/^#[0-9A-Fa-f]{6}$/) != null;
 }
 
 const validateEyeColor = (input: string): boolean => {
@@ -94,7 +94,7 @@ const part2 = () => {
         .filter(passportContainsRequiredFields)
         .filter(pass => pass.fields.filter(field => fieldRequirements[field.key](field.value)).length == pass.fields.length);
 
-        console.log(`Part 2: valid passport count: ${validPassports.length}`);
+    console.log(`Part 2: valid passport count: ${validPassports.length}`);
 }
 
 part1();
