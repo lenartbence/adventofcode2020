@@ -28,5 +28,25 @@ const narrowLocation = (data: string, first: number, last: number, lowerIndicato
 }
 
 const seatIds = boardingPasses.map(getSeatId);
+const seatIdsOrderedDescending = seatIds.sort((a, b) => b - a);
 
-console.log("Part 1, highest seat ID: " + seatIds.sort((a, b) => b - a)[0]);
+const part1 = () => {
+    console.log("Part 1, highest seat ID: " + seatIdsOrderedDescending[0]);
+}
+
+const part2 = () => {
+    let i = 0;
+    while (i < seatIdsOrderedDescending.length - 1 && seatIdsOrderedDescending[i] === seatIdsOrderedDescending[i + 1] + 1) {
+        i++;
+    }
+
+    if (i == seatIdsOrderedDescending.length - 1) {
+        console.log("Could not find seat id");
+    }
+    else {
+        console.log("Part 2, my seat id: " + (seatIdsOrderedDescending[i] - 1));
+    }
+}
+
+part1();
+part2();
