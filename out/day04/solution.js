@@ -39,7 +39,7 @@ var validateBirthYear = function (input) { return validateYear(input, 1920, 2002
 var validateIssueYear = function (input) { return validateYear(input, 2010, 2020); };
 var validateExpirationYear = function (input) { return validateYear(input, 2020, 2030); };
 var validateHeight = function (input) {
-    var data = input.match(/([0-9]*)(in|cm)/);
+    var data = input.match(/^([0-9]*)(in|cm)$/);
     if (!data) {
         return false;
     }
@@ -47,14 +47,14 @@ var validateHeight = function (input) {
     return data[2] === "cm" ? (height >= 150 && height <= 193) : (height >= 59 && height <= 76);
 };
 var validateHexColor = function (input) {
-    return input.match(/#[0-9A-Fa-f]{6}/) != null;
+    return input.match(/^#[0-9A-Fa-f]{6}$/) != null;
 };
 var validateEyeColor = function (input) {
     var possibleColors = new Set("amb blu brn gry grn hzl oth".split(" "));
     return possibleColors.has(input);
 };
 var validatePassportId = function (input) {
-    return input.match(/[0-9]{9}/) != null;
+    return input.match(/^[0-9]{9}$/) != null;
 };
 var fieldRequirements = (_a = {},
     _a["byr"] = validateBirthYear,
