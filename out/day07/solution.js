@@ -55,11 +55,11 @@ var getPossibleContainersOfBag = function (bag, visitedBags) {
     }
     return visitedBags;
 };
-var sum = 0;
+var allContainedBagCount = 0;
 var countAllContainedBags = function (bag, parentCount) {
     for (var _i = 0, _a = bag.contains; _i < _a.length; _i++) {
         var _b = _a[_i], amount = _b[0], child = _b[1];
-        sum += amount * parentCount;
+        allContainedBagCount += amount * parentCount;
         countAllContainedBags(child, amount * parentCount);
     }
 };
@@ -67,7 +67,7 @@ var rules = fs_1.readFileSync("day07\\input.txt", "utf-8").split('\r\n');
 var bags = initializeBags(rules);
 var targetColor = "shiny gold";
 var possibleContainers = getPossibleContainersOfBag(getBagByColorCode(targetColor, bags), new Set());
-var allContainedBagCount = countAllContainedBags(getBagByColorCode(targetColor, bags), 1);
+countAllContainedBags(getBagByColorCode(targetColor, bags), 1);
 console.log("Part 1, number of possible containers of a " + targetColor + " bag: " + possibleContainers.size);
 console.log("Part 2, number of all other contained bags of a " + targetColor + " bag: " + allContainedBagCount);
 //# sourceMappingURL=solution.js.map
