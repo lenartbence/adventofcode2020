@@ -1,16 +1,24 @@
 import { readFileSync } from 'fs';
 
+let accumulator: number;
+
 interface ICommand {
-    execute: (parameter: number) => number
+    type: string;
+
+    execute: (parameter: number) => number;
 }
 
 class NopCommand implements ICommand {
+    type: string = "nop";
+
     execute = (parameter: number) => {
         return 1;
     }
 }
 
 class AccCommand implements ICommand {
+    type: string = "acc";
+
     execute = (parameter: number) => {
         accumulator += parameter;
         return 1;
@@ -18,6 +26,8 @@ class AccCommand implements ICommand {
 }
 
 class JmpCommand implements ICommand {
+    type: string = "jmp";
+
     execute = (parameter: number) => {
         return parameter;
     }
@@ -49,14 +59,45 @@ const commands: Array<CommandEntry> = readFileSync("day08\\input.txt", "utf-8").
         return new CommandEntry(command, parameter);
     })
 
-let accumulator: number = 0;
-let position: number = 0;
-let currentCommand = commands[position];
+const fixCommands = (commands: Array<CommandEntry>): Array<CommandEntry> => {
+    let fixed: boolean = false;
+    let i: number = 0;
+    let fixedCommands: Array<CommandEntry>;
+    while (!fixed && i < commands.length) {
+        if (commands[i].command.type === "nop" || commands[i].command.type === "jmp") {
+            fixedCommands = commands.map(x => new CommandEntry(x.command, x.parameter));
+            swapCommandType(fixedCommands[i]);
+            fixed = executeCommands(fixedCommands);
+        }
+        i++;
+    }
 
-while (!currentCommand.wasExecuted) {
-    position += currentCommand.command.execute(currentCommand.parameter);
-    currentCommand.wasExecuted = true;
-    currentCommand = commands[position];
+    return fixed ? fixedCommands : commands;
 }
 
-console.log("Part 1, accumulator = " + accumulator);
+const swapCommandType = (commandEntry: CommandEntry) => {
+    if (commandEntry.command.type === "nop") {
+        commandEntry.command = commandRepository.get("jmp");
+    }
+    else if (commandEntry.command.type === "jmp") {
+        commandEntry.command = commandRepository.get("nop");
+    }
+}
+
+const executeCommands = (commands: Array<CommandEntry>): boolean => {
+    accumulator = 0;
+    commands.forEach(x => x.wasExecuted = false);
+    let position: number = 0;
+    let currentCommandEntry: CommandEntry = commands[position];
+    while (position < commands.length && !currentCommandEntry.wasExecuted) {
+        position += currentCommandEntry.command.execute(currentCommandEntry.parameter);
+        currentCommandEntry.wasExecuted = true;
+        currentCommandEntry = commands[position];
+    }
+
+    return position >= commands.length;
+}
+
+const fixResult = fixCommands(commands);
+executeCommands(fixResult);
+console.log("Accumulator = " + accumulator);
