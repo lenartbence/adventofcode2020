@@ -70,7 +70,7 @@ const doBusesAlign = (timestamp: number, busesToCheck: Array<number>) => {
 }
 
 let jump = 1;
-let timestamp = buses[0];
+let timestamp = 0;
 
 for (let numberOfBusesToCheck = 2; numberOfBusesToCheck <= buses.length; numberOfBusesToCheck++) {
     while (!doBusesAlign(timestamp, buses.slice(0, numberOfBusesToCheck))) {
