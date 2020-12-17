@@ -1,6 +1,4 @@
-import { Console } from 'console';
 import { readFileSync } from 'fs';
-import { createLogicalAnd } from 'typescript';
 
 class Rule {
     constructor(name: string, validValueRanges: Array<[number, number]>) {
